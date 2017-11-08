@@ -1,0 +1,26 @@
+minimize
+
+general{
+#それぞれが持っている桃の数を表す変数
+    miya;miwa;mina;
+}
+
+#それぞれの発言の内容
+miyaComment = miwa+mina!=2;
+
+miwaComment = miya+mina!=2;
+
+minaComment = miya+miwa!=3;
+
+member=[miya,miwa,mina];
+
+comments=[miyaComment,miwaComment,minaComment];
+
+subject{
+#全てのメンバーは桃を1個か2個持っている
+    forall x in member:x==1||x==2;
+#桃を1個持っている者はウソをついている
+    forall i in [0,1,2]:member[i]==1->!comments[i];
+
+    @object==0;
+}

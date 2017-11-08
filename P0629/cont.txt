@@ -1,0 +1,27 @@
+import stdlib
+minimize
+
+@tmpEps=0.000125;
+@tmpM=10;
+
+free{
+    x;y;x3;y3;
+}
+
+def f(z){
+    sqrt(1-z*z);
+}
+
+def pow3(z){
+    z*z*z;
+}
+
+#apxは関数、範囲、分割数、変数を引数にとり、
+#折れ線を使って制約式を生成する関数
+apx(f,0,1,1000,x,y);
+apx(pow3,0,1,1000,x,x3);
+apx(pow3,0,1,1000,y,y3);
+
+subject{
+    @object==x3+y3-3*x-3*y;
+}

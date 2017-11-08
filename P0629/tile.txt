@@ -1,0 +1,37 @@
+import stdlib
+minimize
+subject @object==0;
+
+binary x;
+
+def g(x){
+    var ret=[];
+    for i in range(0,4):{
+	ret+=[x%4];
+	x=x//4;
+    }
+    ret;
+}
+
+subject{
+    forall i in range(0,2):
+        forall j in range(0,3):
+	    forall k in range(0,256):
+	        forall l in range(0,256):
+		    g(k)[2]!=g(l)[0]->!x[k][i][j]||!x[l][i+1][j];
+
+    forall i in range(0,3):
+        forall j in range(0,2):
+	    forall k in range(0,256):
+	        forall l in range(0,256):
+		    g(k)[1]!=g(l)[3]->!x[k][i][j]||!x[l][i][j+1];
+
+    forall i in range(0,3):
+        forall j in range(0,3):
+	    exists(1) k in range(0,256):
+	        x[k][i][j];
+    
+    forall k in range(0,256):
+        exists(fun(z){z<=1;}) i in range(0,3),j in range(0,3):
+	    x[k][i][j];
+}

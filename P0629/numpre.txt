@@ -1,0 +1,38 @@
+import stdlib
+minimize
+
+#x[i][j]がi行j列目のマス目に入れる数字をあらわす
+general x;
+
+N=[[0,0,7,0,0,0,2,0,0],
+   [0,0,0,6,0,4,0,0,0],
+   [4,0,0,0,0,2,0,0,8],
+   [0,0,0,0,0,1,0,0,5],
+   [2,0,0,0,5,0,0,1,0],
+   [0,0,6,0,8,0,0,7,0],
+   [0,8,0,0,0,0,0,0,0],
+   [1,0,0,5,9,0,8,0,3],
+   [7,2,0,4,0,0,0,0,0]];
+
+subject{
+#初期値が与えられたマス目にはその数字が入る
+    forall i in range(0,9),j in range(0,9):
+        N[i][j]>0->x[i][j]==N[i][j];
+
+#各行には1から9の数字が1回ずつあらわれる
+    forall i in range(0,9),n in range(1,10):
+        exists(1) j in range(0,9):
+            x[i][j]==n;
+
+#各列には1から9の数字が1回ずつあらわれる
+    forall j in range(0,9),n in range(1,10):
+        exists(1) i in range(0,9):
+            x[i][j]==n;
+
+#各3*3のブロックには1から9の数字が1回ずつあらわれる
+    forall k in range(0,3),l in range(0,3),n in range(1,10):
+        exists(1) i in range(0,3),j in range(0,3):
+            x[3*k+i][3*l+j]==n;
+
+    @object==0;
+}
